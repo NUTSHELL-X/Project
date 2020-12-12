@@ -1,6 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from app1 import models
+# 认证模块
+from django.contrib import auth
+
+# 对应数据库
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -9,28 +14,62 @@ from app1 import models
 def login(request):
     error1 = ''
     error2 = ''
-    # 获取用户提交用户id和密码
-    user = request.POST.get('user')
-    pwd = request.POST.get('pwd')
-    # 在数据库中查询
-    user_obj = models.Student.objects.filter(pk=user).first()
+    #post请求
     if request.method == 'POST':
-        if not user_obj:
-            error1 = '未查询到用户名'
-        elif pwd != user_obj.s_password:
-            error2 = '密码错误'
-        else:
-            all_tag = models.Tag.objects.all()
-            all_tea_cou = models.TeaCou.objects.all().order_by("-t_c_satisfaction")  # 加个-号就是降序
+        # 获取用户提交用户id和密码
+        user = request.POST.get('user')
+        pwd = request.POST.get('pwd')
+        if user[0] == 's':
+            # 在数据库学生表中查询
+            user_obj = models.Student.objects.filter(pk=user).first()
+            if not user_obj:
+                error1 = '未查询到用户名'
+            elif pwd != user_obj.s_password:
+                error2 = '密码错误'
+            else:
+                all_tag = models.Tag.objects.all()
+                all_tea_cou = models.TeaCou.objects.all().order_by("-t_c_satisfaction")  # 加个-号就是降序
+                #设置session
+                request.session['is_login'] = True
+                request.session['identity'] = user_obj.s_identity
+                request.session['user'] = user_obj.s_name
+                request.session['user_obj'] = str(user_obj)
 
-            return render(request,'course_list.html',{'user_obj':user_obj,"all_tea_cou": all_tea_cou, "all_tag": all_tag})
+                return render(request, 'course_list.html',
+                              {'user_obj': user_obj, "all_tea_cou": all_tea_cou,
+                               "all_tag": all_tag})
+        elif user[0] == 't':
+            # 在数据库师傅表中查询
+            user_obj = models.Teacher.objects.filter(pk=user).first()
+            if not user_obj:
+                error1 = '未查询到用户名'
+            elif pwd != user_obj.t_password:
+                error2 = '密码错误'
+            else:
+                all_tag = models.Tag.objects.all()
+                all_tea_cou = models.TeaCou.objects.all().order_by("-t_c_satisfaction")  # 加个-号就是降序
+                request.session['is_login'] = True
+                request.session['identity'] = user_obj.t_identity
+                request.session['user'] = user_obj.t_name
+                # request.session['user_obj'] = user_obj
 
-    return render(request, 'login.html',{'error1':error1,'error2':error2})
+                return render(request, 'course_list.html',
+                              {'user_obj': user_obj, "all_tea_cou": all_tea_cou,
+                               "all_tag": all_tag})
+    return render(request, 'login.html', {'error1': error1, 'error2': error2})
 
+#登出
+def logout(request):
+    # del request.session["is_login"] # 删除session_data里的一组键值对
+    request.session.flush()  # 删除一条记录包括(session_key session_data expire_date)三个字段
+    return redirect('/login/')
 
 # 课程列表
 
 def course_list(request: HttpRequest) -> HttpResponse:
+    status = request.session.get('is_login')
+    if not status:
+        return redirect('/login/')
     all_tea_cou = []
     all_tag = models.Tag.objects.all()
     if request.method == "GET":
@@ -80,8 +119,10 @@ def problem_list(request: HttpRequest) -> HttpResponse:
     return render(request, "problem_list.html")
 
 
-# 学生的我的
-def student_my(request: HttpRequest) -> HttpResponse:
+# 学生的or师傅的 我的
+def my(request: HttpRequest) -> HttpResponse:
+
+
     return render(request, "student_my.html")
 
 
@@ -89,10 +130,3 @@ def student_my(request: HttpRequest) -> HttpResponse:
 def team(request: HttpRequest) -> HttpResponse:
     return render(request, "team.html")
 
-
-def course_list2(request: HttpRequest) -> HttpResponse:
-    # get
-    # 获取所有的课程信息
-    all_tea_cou = models.TeaCou.objects.all()
-
-    return render(request, "course_list2.html", {"all_tea_cou": all_tea_cou})

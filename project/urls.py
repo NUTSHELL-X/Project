@@ -17,15 +17,18 @@ from django.contrib import admin
 from django.urls import path
 from app1 import views, search
 
-urlpatterns = [
+
+urlpatterns = [            #将{}改为[]，TypeError: 'set' object is not reversible
     path("admin/", admin.site.urls),
     path("login/", views.login),
+    path("logout/", views.logout),
     path("course_list/", views.course_list),
     path("course_info/", views.course_info),
     path("teacher_list/", views.teacher_list),
     path("problem_list/", views.problem_list),
-    path("student_my/", views.student_my),
+    path("student_my/", views.my),
+    path("teacher_my/", views.my),
     path("team/", views.team),
-    path("course_list2/", views.course_list2),
+
     path("course_search/", search.course_search),
 ]

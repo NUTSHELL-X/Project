@@ -6,28 +6,28 @@ class AuthGroup(models.Model):
 
     class Meta:
         managed = False
-        db_table = "auth_group"
+        db_table = 'auth_group'
 
 
 class AuthGroupPermissions(models.Model):
     group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-    permission = models.ForeignKey("AuthPermission", models.DO_NOTHING)
+    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
 
     class Meta:
         managed = False
-        db_table = "auth_group_permissions"
-        unique_together = (("group", "permission"),)
+        db_table = 'auth_group_permissions'
+        unique_together = (('group', 'permission'),)
 
 
 class AuthPermission(models.Model):
     name = models.CharField(max_length=255)
-    content_type = models.ForeignKey("DjangoContentType", models.DO_NOTHING)
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
     codename = models.CharField(max_length=100)
 
     class Meta:
         managed = False
-        db_table = "auth_permission"
-        unique_together = (("content_type", "codename"),)
+        db_table = 'auth_permission'
+        unique_together = (('content_type', 'codename'),)
 
 
 class AuthUser(models.Model):
@@ -44,7 +44,7 @@ class AuthUser(models.Model):
 
     class Meta:
         managed = False
-        db_table = "auth_user"
+        db_table = 'auth_user'
 
 
 class AuthUserGroups(models.Model):
@@ -53,8 +53,8 @@ class AuthUserGroups(models.Model):
 
     class Meta:
         managed = False
-        db_table = "auth_user_groups"
-        unique_together = (("user", "group"),)
+        db_table = 'auth_user_groups'
+        unique_together = (('user', 'group'),)
 
 
 class AuthUserUserPermissions(models.Model):
@@ -63,20 +63,20 @@ class AuthUserUserPermissions(models.Model):
 
     class Meta:
         managed = False
-        db_table = "auth_user_user_permissions"
-        unique_together = (("user", "permission"),)
+        db_table = 'auth_user_user_permissions'
+        unique_together = (('user', 'permission'),)
 
 
 class Course(models.Model):
     course_id = models.IntegerField(primary_key=True)
     c_name = models.CharField(max_length=30)
-    c_tag = models.ForeignKey("Tag", models.DO_NOTHING)
+    c_tag = models.ForeignKey('Tag', models.DO_NOTHING)
     c_info = models.TextField(blank=True, null=True)
     c_hot = models.PositiveIntegerField()
 
     class Meta:
         managed = False
-        db_table = "course"
+        db_table = 'course'
 
 
 class DjangoAdminLog(models.Model):
@@ -85,12 +85,12 @@ class DjangoAdminLog(models.Model):
     object_repr = models.CharField(max_length=200)
     action_flag = models.PositiveSmallIntegerField()
     change_message = models.TextField()
-    content_type = models.ForeignKey("DjangoContentType", models.DO_NOTHING, blank=True, null=True)
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
     user = models.ForeignKey(AuthUser, models.DO_NOTHING)
 
     class Meta:
         managed = False
-        db_table = "django_admin_log"
+        db_table = 'django_admin_log'
 
 
 class DjangoContentType(models.Model):
@@ -99,8 +99,8 @@ class DjangoContentType(models.Model):
 
     class Meta:
         managed = False
-        db_table = "django_content_type"
-        unique_together = (("app_label", "model"),)
+        db_table = 'django_content_type'
+        unique_together = (('app_label', 'model'),)
 
 
 class DjangoMigrations(models.Model):
@@ -110,7 +110,7 @@ class DjangoMigrations(models.Model):
 
     class Meta:
         managed = False
-        db_table = "django_migrations"
+        db_table = 'django_migrations'
 
 
 class DjangoSession(models.Model):
@@ -120,7 +120,7 @@ class DjangoSession(models.Model):
 
     class Meta:
         managed = False
-        db_table = "django_session"
+        db_table = 'django_session'
 
 
 class Indent(models.Model):
@@ -134,7 +134,7 @@ class Indent(models.Model):
 
     class Meta:
         managed = False
-        db_table = "indent"
+        db_table = 'indent'
 
 
 class Problem(models.Model):
@@ -149,24 +149,27 @@ class Problem(models.Model):
 
     class Meta:
         managed = False
-        db_table = "problem"
+        db_table = 'problem'
 
 
 class Student(models.Model):
     student_id = models.CharField(primary_key=True, max_length=11)
-    s_name = models.CharField(max_length=20)
+    s_name = models.CharField(max_length=30)
     s_password = models.CharField(max_length=30)
     sex = models.CharField(max_length=2, blank=True, null=True)
+    grade = models.CharField(max_length=20, blank=True, null=True)
     email = models.CharField(max_length=30)
+    tel = models.CharField(max_length=11, blank=True, null=True)
     account = models.PositiveIntegerField()
     info = models.TextField(blank=True, null=True)
-    tel = models.CharField(max_length=11, blank=True, null=True)
-    last_login_time = models.DateTimeField(blank=True, null=True)
+    birthday = models.DateTimeField(blank=True, null=True)
     create_time = models.DateTimeField(blank=True, null=True)
+    last_login_time = models.DateTimeField(blank=True, null=True)
+    s_identity = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = "student"
+        db_table = 'student'
 
 
 class Tag(models.Model):
@@ -176,12 +179,12 @@ class Tag(models.Model):
 
     class Meta:
         managed = False
-        db_table = "tag"
+        db_table = 'tag'
 
 
 class TeaCou(models.Model):
     tea_cou_id = models.IntegerField(primary_key=True)
-    t = models.ForeignKey("Teacher", models.DO_NOTHING)
+    t = models.ForeignKey('Teacher', models.DO_NOTHING)
     c = models.ForeignKey(Course, models.DO_NOTHING)
     t_c_hot = models.IntegerField()
     t_c_satisfaction = models.IntegerField(blank=True, null=True)
@@ -192,7 +195,7 @@ class TeaCou(models.Model):
 
     class Meta:
         managed = False
-        db_table = "tea_cou"
+        db_table = 'tea_cou'
 
 
 class Teach(models.Model):
@@ -206,22 +209,26 @@ class Teach(models.Model):
 
     class Meta:
         managed = False
-        db_table = "teach"
+        db_table = 'teach'
 
 
 class Teacher(models.Model):
     teacher_id = models.CharField(primary_key=True, max_length=11)
-    t_name = models.CharField(max_length=20)
+    t_name = models.CharField(max_length=30)
     t_password = models.CharField(max_length=30)
     sex = models.CharField(max_length=2, blank=True, null=True)
+    email = models.CharField(max_length=30, blank=True, null=True)
+    tel = models.CharField(max_length=11, blank=True, null=True)
     account = models.PositiveIntegerField()
+    info = models.TextField(blank=True, null=True)
     c_num = models.IntegerField()
     hot = models.IntegerField(blank=True, null=True)
     satisfaction = models.IntegerField(blank=True, null=True)
-    tel = models.CharField(max_length=11, blank=True, null=True)
+    birthday = models.DateTimeField(blank=True, null=True)
     create_time = models.DateTimeField(blank=True, null=True)
-    email = models.CharField(max_length=30, blank=True, null=True)
+    last_login_time = models.DateTimeField(blank=True, null=True)
+    t_identity = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = "teacher"
+        db_table = 'teacher'
