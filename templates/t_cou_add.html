@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="" method="post">
+
+    <p>
+        出版社：
+        <select name="cou_id" id="">
+            {% for course in all_courses %}
+                <option value="{{ course.pk }}">{{ course.c_name }}</option>
+            {% endfor %}
+        </select>
+    </p>
+    <p>
+        教授简介
+        <input type="text" name="info"><span>{{ error }}</span>
+
+    </p>
+    <br>
+    <button>提交</button>
+
+</form>
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>师傅的我的</title>
 </head>
 <body>
 <div class="container-fluid">
@@ -24,7 +24,7 @@
                     <a class="nav-link" href="/problem_list/">课程问题</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/student_my/">我的</a>
+                    <a class="nav-link" href="/my/">我的</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/team/">关于我们</a>
@@ -37,15 +37,15 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            <h3>用户名</h3>
-            <h3>张三</h3>
+          <h3>{{ request.session.identity }}</h3>
+          <h3>{{ request.session.user }}</h3>
             <div
                     class="btn-group btn-group-vertical btn-group-lg col-sm-8"
                     role="group"
             >
-                <button class="btn btn-secondary" type="button">我的账户</button>
                 <button class="btn btn-secondary" type="button">课程管理</button>
                 <button class="btn btn-secondary" type="button">学生管理</button>
+                <button class="btn btn-secondary" type="button">我的账户</button>
                 <button class="btn btn-secondary" type="button">历史订单</button>
                 <button class="btn btn-secondary" type="button">个人信息</button>
             </div>
@@ -55,11 +55,38 @@
                 <br/>
             </h3>
             <h3>
-                <br/>
+                <a class="btn btn-primary" href="/t_cou_add/">添加课程</a>
             </h3>
-            <p>
-                这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位这里是占位
-            </p>
+           <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>类别</th>
+                    <th>课程名</th>
+                    <th>老师</th>
+                    <th>课程热度</th>
+                    <th>课程满意度</th>
+                    <th>课程信息</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for tea_cou in all_tea_cou %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ tea_cou.c.c_tag.tag_name }}</td>
+                        <td>{{ tea_cou.c.c_name }}</td>
+                        <td>{{ tea_cou.t.t_name }}</td>
+                        <td>{{ tea_cou.t_c_hot }}</td>
+                        <td>{{ tea_cou.t_c_satisfaction }}</td>
+                        <td>
+                            <a class="btn btn-success btn-sm" href="/course_info/?pk={{ tea_cou.pk }}">了解更多</a>
+                        </td>
+                    </tr>
+
+
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

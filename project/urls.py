@@ -26,9 +26,11 @@ urlpatterns = [            #将{}改为[]，TypeError: 'set' object is not rever
     path("course_info/", views.course_info),
     path("teacher_list/", views.teacher_list),
     path("problem_list/", views.problem_list),
-    path("student_my/", views.my),
-    path("teacher_my/", views.my),
+    path("my/", views.my),
+    # path("teacher_my/", views.my),
+    path("t_cou_add/", views.t_cou_add),
     path("team/", views.team),
 
     path("course_search/", search.course_search),
+    path("t_course_search/", search.t_course_search),
 ]

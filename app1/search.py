@@ -24,3 +24,13 @@ def course_search(request: HttpRequest) -> HttpResponse:
     #     print(cou.c_name)
     all_tea_cou = models.TeaCou.objects.filter(c__c_name__contains=course_name)  # 正向模糊查询的到set,通过外键加__，连接到对应类，获得属性
     return render(request, "course_list.html", {"all_tea_cou": all_tea_cou, "all_tag": all_tag})
+
+#查询相应师傅的课程
+def t_course_search(request):
+    #获取？后的师傅主键
+    pk = request.GET.get('pk')
+    #查询数据库
+    all_tea_cou = models.TeaCou.objects.filter(t=pk)   #名字要取一样的，不然渲染不出来
+    all_tag = models.Tag.objects.all()
+
+    return render(request,'course_list.html',{'all_tea_cou':all_tea_cou,'all_tag':all_tag})

@@ -165,7 +165,7 @@ class Student(models.Model):
     birthday = models.DateTimeField(blank=True, null=True)
     create_time = models.DateTimeField(blank=True, null=True)
     last_login_time = models.DateTimeField(blank=True, null=True)
-    s_identity = models.CharField(max_length=10, blank=True, null=True)
+    identity = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -183,10 +183,10 @@ class Tag(models.Model):
 
 
 class TeaCou(models.Model):
-    tea_cou_id = models.IntegerField(primary_key=True)
+    tea_cou_id = models.AutoField(primary_key=True)
     t = models.ForeignKey('Teacher', models.DO_NOTHING)
     c = models.ForeignKey(Course, models.DO_NOTHING)
-    t_c_hot = models.IntegerField()
+    t_c_hot = models.IntegerField(blank=True, null=True)
     t_c_satisfaction = models.IntegerField(blank=True, null=True)
     info = models.TextField(blank=True, null=True)
     status = models.IntegerField(blank=True, null=True)
@@ -227,7 +227,7 @@ class Teacher(models.Model):
     birthday = models.DateTimeField(blank=True, null=True)
     create_time = models.DateTimeField(blank=True, null=True)
     last_login_time = models.DateTimeField(blank=True, null=True)
-    t_identity = models.CharField(max_length=10, blank=True, null=True)
+    identity = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
         managed = False

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>老师浏览</title>
 </head>
 <body>
 <div class="container-fluid">
@@ -11,7 +11,7 @@
             <h3 class="text-center">老师浏览</h3>
         </div>
         <div class="col-md-12">
-          <h5 class="text-right">{{ request.session.identity }}{{request.session.user}}</h5>
+            <h5 class="text-right">{{ request.session.identity }}{{ request.session.user }}</h5>
         </div>
     </div>
     <div class="row">
@@ -27,7 +27,7 @@
                     <a class="nav-link" href="/problem_list/">课程问题</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/student_my/">我的</a>
+                    <a class="nav-link" href="/my/">我的</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/team/">关于我们</a>
@@ -42,11 +42,9 @@
         <div class="col-md-2">
             <h3>选择老师</h3>
             <ul>
-                <li class="list-item">老师1</li>
-                <li class="list-item">老师2</li>
-                <li class="list-item">老师3</li>
-                <li class="list-item">老师4</li>
-                <li class="list-item">老师5</li>
+                {% for teacher in teacher_obj_top %}
+                    <li class="list-item">{{ teacher.t_name }}</li>
+                {% endfor %}
             </ul>
         </div>
         <div class="col-md-10">
@@ -123,21 +121,27 @@
             <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th>id</th>
-                    <th>课程名</th>
-                    <th>课程时长</th>
-                    <th>课程信息</th>
+                    <th>序号</th>
+                    <th>师傅</th>
+                    <th>师傅课程数量</th>
+                    <th>师傅热度</th>
+                    <th>师傅满意度</th>
+                    <th>所教课程信息</th>
                 </tr>
                 </thead>
                 <tbody>
-
-                <tr>
-                    <td>1</td>
-                    <td>课程名1</td>
-                    <td>老师1</td>
-                    <td>课程时长1</td>
-                    <td>了解更多信息</td>
-                </tr>
+                {% for teacher in teacher_obj %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ teacher.t_name }}</td>
+                        <td>{{ teacher.c_num }}</td>
+                        <td>{{ teacher.hot }}</td>
+                        <td>{{ teacher.satisfaction }}</td>
+                        <td>
+                            <a class="btn btn-success btn-sm" href="/t_course_search/?pk={{ teacher.pk }}">查询所教课程</a>
+                        </td>
+                    </tr>
+                {% endfor %}
 
 
                 </tbody>
