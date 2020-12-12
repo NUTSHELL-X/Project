@@ -125,11 +125,11 @@ class DjangoSession(models.Model):
 
 class Indent(models.Model):
     indent_id = models.AutoField(primary_key=True)
-    s_id = models.CharField(max_length=11)
-    t_id = models.CharField(max_length=11)
-    c_id = models.IntegerField()
-    status = models.IntegerField()
-    type = models.IntegerField()
+    s = models.ForeignKey('Student', models.DO_NOTHING)
+    tea_cou = models.ForeignKey('TeaCou', models.DO_NOTHING)
+    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    status = models.IntegerField(blank=True, null=True)
+    type = models.IntegerField(blank=True, null=True)
     create_time = models.DateTimeField()
 
     class Meta:
@@ -186,6 +186,7 @@ class TeaCou(models.Model):
     tea_cou_id = models.AutoField(primary_key=True)
     t = models.ForeignKey('Teacher', models.DO_NOTHING)
     c = models.ForeignKey(Course, models.DO_NOTHING)
+    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     t_c_hot = models.IntegerField(blank=True, null=True)
     t_c_satisfaction = models.IntegerField(blank=True, null=True)
     info = models.TextField(blank=True, null=True)
@@ -222,6 +223,7 @@ class Teacher(models.Model):
     account = models.PositiveIntegerField()
     info = models.TextField(blank=True, null=True)
     c_num = models.IntegerField()
+    stu_num = models.IntegerField(blank=True, null=True)
     hot = models.IntegerField(blank=True, null=True)
     satisfaction = models.IntegerField(blank=True, null=True)
     birthday = models.DateTimeField(blank=True, null=True)

@@ -33,7 +33,7 @@
                     <a class="nav-link" href="/team/">关于我们</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">返</a>
+                    <a class="nav-link" href="/logout/">登出</a>
                 </li>
             </ul>
         </div>
@@ -55,7 +55,8 @@
         </div>
         <div class="col-md-4">
             <button type="button" class="btn btn-success">课程问题</button>
-            <button type="button" class="btn btn-success">拜师</button>
+            <a class="btn btn-success" href="/indent_create/?pk={{ tea_cou.pk }}">拜师</a>
+            <span>{{ error }}</span>
         </div>
     </div>
 </div>

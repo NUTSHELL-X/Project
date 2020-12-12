@@ -164,12 +164,13 @@ def t_cou_add(request):
         pk = request.session.get('pk')
         cou_id = request.POST.get('cou_id')
         info = request.POST.get('info')
+        price = request.POST.get('price')
         t_c_hot = r.randint(30, 75)
         t_c_satisfaction = r.randint(30, 75)
         status = 1
         sum_student = 0
         # 将数据插入数据库
-        models.TeaCou.objects.create(t_id=pk, c_id=cou_id, info=info, t_c_hot=t_c_hot,
+        models.TeaCou.objects.create(t_id=pk, c_id=cou_id, info=info, price=price,t_c_hot=t_c_hot,
                                      t_c_satisfaction=t_c_satisfaction, status=status, sum_student=sum_student)
         return redirect('/my/')
     all_courses = models.Course.objects.all()

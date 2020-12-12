@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from app1 import views, search
+from app1 import views, search,indent
 
 
 urlpatterns = [            #将{}改为[]，TypeError: 'set' object is not reversible
@@ -32,5 +32,11 @@ urlpatterns = [            #将{}改为[]，TypeError: 'set' object is not rever
     path("team/", views.team),
 
     path("course_search/", search.course_search),
+    #该师傅所教课程
     path("t_course_search/", search.t_course_search),
+    path("teacher_search/", search.teacher_search),
+
+    path("indent_create/", indent.indent_create),
+
+
 ]

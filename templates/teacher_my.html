@@ -66,6 +66,7 @@
                     <th>老师</th>
                     <th>课程热度</th>
                     <th>课程满意度</th>
+                    <th>价格</th>
                     <th>课程信息</th>
                 </tr>
                 </thead>
@@ -78,6 +79,7 @@
                         <td>{{ tea_cou.t.t_name }}</td>
                         <td>{{ tea_cou.t_c_hot }}</td>
                         <td>{{ tea_cou.t_c_satisfaction }}</td>
+                        <td>{{ tea_cou.price }}元</td>
                         <td>
                             <a class="btn btn-success btn-sm" href="/course_info/?pk={{ tea_cou.pk }}">了解更多</a>
                         </td>

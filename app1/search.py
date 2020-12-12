@@ -34,3 +34,11 @@ def t_course_search(request):
     all_tag = models.Tag.objects.all()
 
     return render(request,'course_list.html',{'all_tea_cou':all_tea_cou,'all_tag':all_tag})
+
+
+def teacher_search(request):
+    teacher_obj_top = models.Teacher.objects.filter(c_num__gt=0).order_by('-hot')[0:10]  # 取top10
+    teacher_name = request.POST.get('teacher_name')
+    # 在数据库中查询
+    teacher_obj = models.Teacher.objects.filter(t_name__contains=teacher_name)
+    return render(request,'teacher_list.html',{'teacher_obj_top':teacher_obj_top,'teacher_obj':teacher_obj})
