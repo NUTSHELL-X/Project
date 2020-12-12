@@ -19,6 +19,7 @@ from app1 import views, search
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("login/", views.login),
     path("course_list/", views.course_list),
     path("course_info/", views.course_info),
     path("teacher_list/", views.teacher_list),

@@ -5,8 +5,30 @@ from app1 import models
 
 # Create your views here.
 
-# 课程列表
+# 登录
+def login(request):
+    error1 = ''
+    error2 = ''
+    # 获取用户提交用户id和密码
+    user = request.POST.get('user')
+    pwd = request.POST.get('pwd')
+    # 在数据库中查询
+    user_obj = models.Student.objects.filter(pk=user).first()
+    if request.method == 'POST':
+        if not user_obj:
+            error1 = '未查询到用户名'
+        elif pwd != user_obj.s_password:
+            error2 = '密码错误'
+        else:
+            all_tag = models.Tag.objects.all()
+            all_tea_cou = models.TeaCou.objects.all().order_by("-t_c_satisfaction")  # 加个-号就是降序
 
+            return render(request,'course_list.html',{'user_obj':user_obj,"all_tea_cou": all_tea_cou, "all_tag": all_tag})
+
+    return render(request, 'login.html',{'error1':error1,'error2':error2})
+
+
+# 课程列表
 
 def course_list(request: HttpRequest) -> HttpResponse:
     all_tea_cou = []
