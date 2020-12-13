@@ -59,36 +59,24 @@
             <h3>
                 <br/>
             </h3>
-            <table class="table table-bordered table-hover">
+           <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th>序号</th>
-                    <th>类别</th>
-                    <th>课程名</th>
-                    <th>老师</th>
-                    <th>课程热度</th>
-                    <th>课程满意度</th>
-                    <th>价格</th>
+                    <th>身份</th>
+                    <th>姓名</th>
+                    <th>账户余额</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for teach in  all_teach %}
                     <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ teach.tea_cou.c.c_tag.tag_name }}</td>
-                        <td>{{ teach.tea_cou.c.c_name }}</td>
-                        <td>{{ teach.tea_cou.t.t_name }}</td>
-                        <td>{{ teach.tea_cou.t_c_hot }}</td>
-                        <td>{{ teach.tea_cou.t_c_satisfaction }}</td>
-                        <td>{{ teach.tea_cou.price }}</td>
+                        <td>{{ request.session.identity }}</td>
+                        <td>{{ stu_obj.s_name }}</td>
+                        <td>{{ stu_obj.account }}元</td>
                         <td>
-                            <a class="btn btn-success btn-sm" href="/course_info/?pk={{ teach.tea_cou.pk }}">师生交流</a>
+                            <a class="btn btn-success btn-sm" href="">充值</a>
                         </td>
                     </tr>
-
-
-                {% endfor %}
                 </tbody>
             </table>
         </div>

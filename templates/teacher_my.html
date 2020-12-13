@@ -10,6 +10,9 @@
         <div class="col-md-12">
             <h3 class="text-center">我的</h3>
         </div>
+        <div class="col-md-12">
+            <h5 class="text-right">{{ request.session.identity }}{{ request.session.user }}</h5>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -37,17 +40,17 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-          <h3>{{ request.session.identity }}</h3>
-          <h3>{{ request.session.user }}</h3>
+          <h3><br></h3>
+          <h3><br></h3>
             <div
                     class="btn-group btn-group-vertical btn-group-lg col-sm-8"
                     role="group"
             >
-                <button class="btn btn-secondary" type="button">课程管理</button>
-                <button class="btn btn-secondary" type="button">学生管理</button>
-                <button class="btn btn-secondary" type="button">我的账户</button>
-                <button class="btn btn-secondary" type="button">历史订单</button>
-                <button class="btn btn-secondary" type="button">个人信息</button>
+                <a class="btn btn-secondary" type="button" href="/my/">课程管理</a>
+                <a class="btn btn-secondary" type="button" href="/tea_my_student/">学生管理</a>
+                <a class="btn btn-secondary" type="button" href="/my_account/">我的账户</a>
+                <a class="btn btn-secondary" type="button" href="/my_indent/">历史订单</a>
+                <a class="btn btn-secondary" type="button" href="/my_info/">个人信息</a>
             </div>
         </div>
         <div class="col-md-9">

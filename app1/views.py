@@ -13,6 +13,8 @@ from django.contrib.auth.models import User
 
 # 登录
 def login(request):
+    # models.Student.objects.all().update(identity='学生')  #就是更新一下数据
+    # models.Teacher.objects.all().update(identity='师傅')
     error1 = ''
     error2 = ''
     # post请求
@@ -141,13 +143,15 @@ def my(request: HttpRequest) -> HttpResponse:
     if not status:
         return redirect('/login/')
     identity = request.session.get('identity')
+    #学生或师傅的主键
     pk = request.session.get('pk')
-    print(pk)
+    #print(pk)
     if identity == '师傅':
         all_tea_cou = models.TeaCou.objects.filter(t=pk)
         return render(request, "teacher_my.html", {'all_tea_cou': all_tea_cou})
     else:
-        return render(request, "student_my.html")
+        all_teach = models.Teach.objects.filter(s_id=pk)
+        return render(request, "student_my.html",{'all_teach':all_teach})
 
 
 # 关于我们
