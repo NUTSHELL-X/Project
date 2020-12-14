@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>回答</title>
+</head>
+<body>
+<form action="/tea_ans_problem/?p_id={{ pro_obj.pk }}" method="post">
+    <h4>{{ pro_obj.tea_cou.c.c_name }}课程提问</h4>
+    <p>提问学生：{{ pro_obj.s.s_name }}</p>
+    <p>回答老师：{{ pro_obj.tea_cou.t.t_name }}</p>
+    <p>问题描述：{{ pro_obj.p_info }}</p>
+    <p>
+        问题回答：
+        <textarea type="text" name="p_ans" style="height: 100px;width: 300px"></textarea><span>{{ error }}</span>
+    </p>
+    <p>
+        问题价格: <input type="number" name="p_price">元
+    </p>
+    <br>
+    <button>提交</button>
+
+</form>
+</body>
+</html>

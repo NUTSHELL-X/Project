@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <title>学生的我的</title>
+    <meta charset="UTF-8">
+    <title>师傅的我的</title>
 </head>
 <body>
 <div class="container-fluid">
@@ -44,9 +44,10 @@
             <h3><br></h3>
             <div
                     class="btn-group btn-group-vertical btn-group-lg col-sm-8"
-                    role="group">
+                    role="group"
+            >
                 <a class="btn btn-secondary" type="button" href="/my/">课程管理</a>
-                <a class="btn btn-secondary" type="button" href="/stu_exam/">课程问题测试</a>
+                <a class="btn btn-secondary" type="button" href="/tea_my_student/">学生管理</a>
                 <a class="btn btn-secondary" type="button" href="/my_account/">我的账户</a>
                 <a class="btn btn-secondary" type="button" href="/my_indent/">历史订单</a>
                 <a class="btn btn-secondary" type="button" href="/my_info/">个人信息</a>
@@ -57,7 +58,7 @@
                 <br/>
             </h3>
             <h3>
-                <p>课程管理</p>
+                <p>学生管理</p>
             </h3>
             <table class="table table-bordered table-hover">
                 <thead>
@@ -66,9 +67,9 @@
                     <th>类别</th>
                     <th>课程名</th>
                     <th>老师</th>
+                    <th>学生</th>
                     <th>课程热度</th>
                     <th>课程满意度</th>
-                    <th>价格</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -79,9 +80,9 @@
                         <td>{{ teach.tea_cou.c.c_tag.tag_name }}</td>
                         <td>{{ teach.tea_cou.c.c_name }}</td>
                         <td>{{ teach.tea_cou.t.t_name }}</td>
+                        <td>{{ teach.s.s_name }}</td>
                         <td>{{ teach.tea_cou.t_c_hot }}</td>
                         <td>{{ teach.tea_cou.t_c_satisfaction }}</td>
-                        <td>{{ teach.tea_cou.price }}元</td>
                         <td>
                             <a class="btn btn-success btn-sm" href="/talk/?pk={{ teach.tea_cou.pk }}">师生交流</a>
                         </td>
@@ -113,5 +114,6 @@
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"
 ></script>
+
 </body>
 </html>

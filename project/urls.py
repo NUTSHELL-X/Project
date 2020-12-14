@@ -42,6 +42,8 @@ urlpatterns = [            #将{}改为[]，TypeError: 'set' object is not rever
     path("indent_create/", manage.indent1_create),
     path("my_account/", manage.my_account),
     path("talk/", manage.talk),
+    path("stu_add_problem/", manage.stu_add_problem),
+    path("tea_ans_problem/", manage.tea_ans_problem),
     path("my_indent/", manage.my_indent),
     path("my_info/", manage.my_info),
     path("tea_my_student/", manage.tea_my_student),

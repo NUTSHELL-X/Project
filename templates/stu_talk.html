@@ -57,36 +57,29 @@
                 <br/>
             </h3>
             <h3>
-                <p>课程管理</p>
+                <p>{{ tea_cou_obj.c.c_name }}课程问答</p>
             </h3>
+            <p>师傅：{{ tea_cou_obj.t.t_name }}&nbsp学生：{{ stu_obj.s_name }}</p>
+            <a class="btn btn-success btn-sm" href="/stu_add_problem/?s_id={{ stu_obj.pk }}&tea_cou_id={{ tea_cou_obj.pk }}">提问</a>
             <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
                     <th>序号</th>
-                    <th>类别</th>
-                    <th>课程名</th>
-                    <th>老师</th>
-                    <th>课程热度</th>
-                    <th>课程满意度</th>
-                    <th>价格</th>
-                    <th>操作</th>
+                    <th>问题</th>
+                    <th>回答</th>
+                    <th>提问时间</th>
+                    <th>回答时间</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for teach in  all_teach %}
+                {% for problem in all_problem %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>{{ teach.tea_cou.c.c_tag.tag_name }}</td>
-                        <td>{{ teach.tea_cou.c.c_name }}</td>
-                        <td>{{ teach.tea_cou.t.t_name }}</td>
-                        <td>{{ teach.tea_cou.t_c_hot }}</td>
-                        <td>{{ teach.tea_cou.t_c_satisfaction }}</td>
-                        <td>{{ teach.tea_cou.price }}元</td>
-                        <td>
-                            <a class="btn btn-success btn-sm" href="/talk/?pk={{ teach.tea_cou.pk }}">师生交流</a>
-                        </td>
+                        <td>{{ problem.p_info }}</td>
+                        <td>{{ problem.p_ans }}</td>
+                        <td>{{ problem.create_time }}</td>
+                        <td>{{ problem.ans_time }}</td>
                     </tr>
-
 
                 {% endfor %}
                 </tbody>

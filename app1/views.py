@@ -149,7 +149,7 @@ def my(request: HttpRequest) -> HttpResponse:
     if identity == '师傅':
         all_tea_cou = models.TeaCou.objects.filter(t=pk)
         return render(request, "teacher_my.html", {'all_tea_cou': all_tea_cou})
-    else:
+    else:   #学生
         all_teach = models.Teach.objects.filter(s_id=pk)
         return render(request, "student_my.html",{'all_teach':all_teach})
 
@@ -171,7 +171,7 @@ def t_cou_add(request):
         price = request.POST.get('price')
         t_c_hot = r.randint(30, 75)
         t_c_satisfaction = r.randint(30, 75)
-        status = 1
+        status = 1   #可选状态
         sum_student = 0
         # 将数据插入数据库
         models.TeaCou.objects.create(t_id=pk, c_id=cou_id, info=info, price=price,t_c_hot=t_c_hot,

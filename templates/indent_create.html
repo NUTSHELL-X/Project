@@ -14,13 +14,11 @@
     <p>学生姓名：{{ stu_obj.s_name }}</p>
     <p>教师姓名：{{ tea_cou_obj.t.t_name }}</p>
     <p>课程名称：{{ tea_cou_obj.c.c_name }}</p>
-    <p>课程价格：{{ tea_cou_obj.price }}元</p>
+    <p>课程价格：{{ tea_cou_obj.price }}元</p><spqn>{{ error }}</spqn>
     <br>
     <button class="btn btn-success btn-sm">确认付费</button>
     <a class="btn btn-danger btn-sm" href="/course_info/?pk={{ tea_cou_obj.pk }}">取消</a>
 </form>
 
 </body>
-
-
 </html>

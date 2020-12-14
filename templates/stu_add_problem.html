@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提问</title>
+</head>
+<body>
+<form action="/stu_add_problem/?s_id={{ stu_obj.pk }}&tea_cou_id={{ tea_cou_obj.pk }}" method="post">
+    <h4>{{ tea_cou_obj.c.c_name }}课程提问</h4>
+    <p>提问学生：{{ stu_obj.s_name }}</p>
+    <p>
+        问题描述：
+        <textarea type="text" name="p_info" style="height: 100px;width: 300px"></textarea><span>{{ error }}</span>
+    </p>
+    <br>
+    <button>提交</button>
+
+</form>
+</body>
+</html>

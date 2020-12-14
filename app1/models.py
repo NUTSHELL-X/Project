@@ -129,7 +129,7 @@ class Indent(models.Model):
     tea_cou = models.ForeignKey('TeaCou', models.DO_NOTHING, blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     status = models.IntegerField(blank=True, null=True)
-    type = models.IntegerField(blank=True, null=True)
+    type = models.ForeignKey('Type', models.DO_NOTHING, blank=True, null=True)
     create_time = models.DateTimeField()
 
     class Meta:
@@ -139,13 +139,14 @@ class Indent(models.Model):
 
 class Problem(models.Model):
     problem_id = models.AutoField(primary_key=True)
+    s = models.ForeignKey('Student', models.DO_NOTHING)
+    tea_cou = models.ForeignKey('TeaCou', models.DO_NOTHING, blank=True, null=True)
+    type = models.ForeignKey('Type', models.DO_NOTHING, blank=True, null=True)
     p_info = models.TextField()
     p_ans = models.TextField(blank=True, null=True)
-    c_id = models.IntegerField()
-    p_price = models.FloatField()
+    p_price = models.FloatField(blank=True, null=True)
     create_time = models.DateTimeField(blank=True, null=True)
-    t_id = models.CharField(max_length=11)
-    s_id = models.CharField(max_length=11)
+    ans_time = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -234,3 +235,12 @@ class Teacher(models.Model):
     class Meta:
         managed = False
         db_table = 'teacher'
+
+
+class Type(models.Model):
+    type_id = models.IntegerField(primary_key=True)
+    type_name = models.CharField(max_length=8, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'type'

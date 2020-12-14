@@ -57,37 +57,36 @@
                 <br/>
             </h3>
             <h3>
-                <p>课程管理</p>
+                <p>历史订单</p>
             </h3>
             <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
                     <th>序号</th>
-                    <th>类别</th>
+                    <th>类型</th>
                     <th>课程名</th>
                     <th>老师</th>
-                    <th>课程热度</th>
-                    <th>课程满意度</th>
+                    <th>学生</th>
                     <th>价格</th>
-                    <th>操作</th>
+                    <th>时间</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for teach in  all_teach %}
+                {% for indent_obj in all_indent_obj %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>{{ teach.tea_cou.c.c_tag.tag_name }}</td>
-                        <td>{{ teach.tea_cou.c.c_name }}</td>
-                        <td>{{ teach.tea_cou.t.t_name }}</td>
-                        <td>{{ teach.tea_cou.t_c_hot }}</td>
-                        <td>{{ teach.tea_cou.t_c_satisfaction }}</td>
-                        <td>{{ teach.tea_cou.price }}元</td>
-                        <td>
-                            <a class="btn btn-success btn-sm" href="/talk/?pk={{ teach.tea_cou.pk }}">师生交流</a>
-                        </td>
+{#                        <td>{% if indent_obj.type == 1 %}#}
+{#                            拜师#}
+{#                        {% else %}#}
+{#                            课程问题#}
+{#                        {% endif %} </td>#}
+                        <td>{{ indent_obj.type.type_name }}</td>
+                        <td>{{ indent_obj.tea_cou.c.c_name }}</td>
+                        <td>{{ indent_obj.tea_cou.t.t_name }}</td>
+                        <td>{{ indent_obj.s.s_name }}</td>
+                        <td>{{ indent_obj.price }}元</td>
+                        <td>{{ indent_obj.create_time }}</td>
                     </tr>
-
-
                 {% endfor %}
                 </tbody>
             </table>
