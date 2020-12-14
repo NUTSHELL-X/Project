@@ -134,7 +134,10 @@ def problem_list(request: HttpRequest) -> HttpResponse:
     status = request.session.get('is_login')
     if not status:
         return redirect('/login/')
-    return render(request, "problem_list.html")
+
+    all_problem = models.Problem.objects.all()
+    all_teach = models.Teach.objects.all().distinct()[0:10]
+    return render(request, "problem_list.html",{'all_problem':all_problem,'all_teach':all_teach})
 
 
 # 学生的or师傅的 我的

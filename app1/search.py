@@ -42,3 +42,26 @@ def teacher_search(request):
     # 在数据库中查询
     teacher_obj = models.Teacher.objects.filter(t_name__contains=teacher_name)
     return render(request,'teacher_list.html',{'teacher_obj_top':teacher_obj_top,'teacher_obj':teacher_obj})
+
+
+def tag_search(request):
+    #获取？后面的tag_id
+    tag_id = request.GET.get('tag_id')
+    all_tea_cou = models.TeaCou.objects.filter(c__c_tag_id=tag_id)   #名字要取一样的，不然渲染不出来
+    all_tag = models.Tag.objects.all()
+    return render(request,'course_list.html',{'all_tea_cou':all_tea_cou,'all_tag':all_tag})
+
+
+def teach_search(request):
+    course_id = request.GET.get('course_id')
+
+    all_problem = models.Problem.objects.filter(tea_cou__c__pk=course_id)
+    all_teach = models.Teach.objects.all().distinct()[0:10]
+    return render(request, "problem_list.html",{'all_problem':all_problem,'all_teach':all_teach})
+
+
+def problem_search(request):
+    p_info = request.POST.get('p_info')
+    all_problem = models.Problem.objects.filter(p_info__contains=p_info)
+    all_teach = models.Teach.objects.all().distinct()[0:10]
+    return render(request, "problem_list.html",{'all_problem':all_problem,'all_teach':all_teach})

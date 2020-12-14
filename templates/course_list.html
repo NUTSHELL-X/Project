@@ -40,10 +40,10 @@
     </div>
     <div class="row">
         <div class="col-md-2">
-            <h3>选择分类</h3>
+            <h3>分类</h3>
             <ul>
                 {% for tag in all_tag %}
-                <li class="list-item">{{ tag.tag_name }}</li>
+                    <li class="list-item"><a href="/tag_search/?tag_id={{ tag.tag_id }}">{{ tag.tag_name }}</a></li>
                 {% endfor %}
             </ul>
         </div>

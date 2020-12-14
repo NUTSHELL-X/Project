@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from app1 import models
 from datetime import datetime
+from decimal import Decimal
 import random as r
 
 
@@ -43,7 +44,7 @@ def indent1_create(request):
                 models.Teach.objects.create(s_id=s_id, tea_cou_id=t_c_pk, status=status, create_time=create_time)
                 return redirect('/my/')
 
-        return render(request, 'indent_create.html', {'stu_obj': stu_obj, 'tea_cou_obj': tea_cou_obj,'error':error})
+        return render(request, 'indent_create.html', {'stu_obj': stu_obj, 'tea_cou_obj': tea_cou_obj, 'error': error})
 
 
 def my_account(request):
@@ -68,13 +69,14 @@ def talk(request):
     tea_cou_obj = models.TeaCou.objects.filter(pk=tea_cou_id).first()
     if identity == '师傅':
         # 从数据库查询
-        #师傅在该任教所有的辅导
+        # 师傅在该任教所有的辅导
         all_teach = models.Teach.objects.filter(tea_cou_id=tea_cou_id)
         all_problem = models.Problem.objects.filter(tea_cou_id=tea_cou_id)
-        return render(request, 'tea_talk.html', {'all_teach': all_teach, 'tea_cou_obj': tea_cou_obj, 'all_problem': all_problem})
+        return render(request, 'tea_talk.html',
+                      {'all_teach': all_teach, 'tea_cou_obj': tea_cou_obj, 'all_problem': all_problem})
     else:  # 学生
         stu_obj = models.Student.objects.filter(pk=pk).first()
-        all_problem = models.Problem.objects.filter(s_id=stu_obj.pk).filter(tea_cou_id=tea_cou_id)   #需要有学生，任教双重过滤
+        all_problem = models.Problem.objects.filter(s_id=stu_obj.pk).filter(tea_cou_id=tea_cou_id)  # 需要有学生，任教双重过滤
         return render(request, 'stu_talk.html',
                       {'stu_obj': stu_obj, 'tea_cou_obj': tea_cou_obj, 'all_problem': all_problem})
 
@@ -104,7 +106,8 @@ def my_info(request):
         stu_obj = models.Student.objects.filter(pk=pk).first()
         return render(request, 'stu_info.html', {'stu_obj': stu_obj})
 
-#师傅学生管理
+
+# 师傅学生管理
 def tea_my_student(request):
     # 师傅的主键
     pk = request.session.get('pk')
@@ -142,7 +145,7 @@ def stu_add_problem(request):
 
 def tea_ans_problem(request):
     error = ''
-    #获取？的问题编号
+    # 获取？的问题编号
     p_id = request.GET.get('p_id')
     pro_obj = models.Problem.objects.filter(pk=p_id).first()
     if request.method == 'POST':
@@ -152,10 +155,55 @@ def tea_ans_problem(request):
         else:
             p_price = request.POST.get('p_price')
             ans_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            models.Problem.objects.filter(pk=p_id).update(p_ans=p_ans,p_price=p_price,ans_time=ans_time)
-            #回到学生管理
+            models.Problem.objects.filter(pk=p_id).update(p_ans=p_ans, p_price=p_price, ans_time=ans_time)
+            # 回到学生管理
             pk = request.session.get('pk')
             all_teach = models.Teach.objects.filter(tea_cou__t=pk)
-            return render(request, 'tea_my_student.html',{'all_teach': all_teach})
+            return render(request, 'tea_my_student.html', {'all_teach': all_teach})
 
-    return render(request,'tea_ans_problem.html',{'pro_obj':pro_obj,'error':error})
+    return render(request, 'tea_ans_problem.html', {'pro_obj': pro_obj, 'error': error})
+
+
+def stu_add_my_account(request):
+    error = ''
+    # 从session获取学生pk
+    s_id = request.session.get('pk')
+    stu_obj = models.Student.objects.filter(pk=s_id).first()
+    if request.method == 'POST':
+        add_account = request.POST.get('add_account')
+        if not add_account:
+            error = '请输入金额'
+        else:
+            add_account = Decimal(request.POST.get('add_account'))  # 这里获取的都默认是字符串
+            # print(type(add_account))
+            if add_account <= 0:
+                error = '充值金额需要大于0'
+            else:
+                account = stu_obj.account + add_account
+                models.Student.objects.filter(pk=s_id).update(account=account)
+                # return render(request, 'stu_account.html', {'stu_obj': stu_obj})
+                return redirect('/my_account/')        #这里用这种
+    return render(request, 'stu_add_my_account.html', {'stu_obj': stu_obj, 'error': error})
+
+
+def tea_trans_my_account(request):
+    error = ''
+    t_id = request.session.get('pk')
+    tea_obj = models.Teacher.objects.filter(pk=t_id).first()
+    if request.method == 'POST':
+        trans_account = request.POST.get('trans_account')
+        #判空要放在最前面
+        if not trans_account:
+            error = '请输入金额'
+        else:
+            trans_account = Decimal(trans_account)
+            if trans_account > tea_obj.account:
+                error = '提现超出账户余额'
+            elif trans_account <= 0:
+                error = '提现金额需要大于0'
+            else:
+                account = tea_obj.account - trans_account
+                models.Teacher.objects.filter(pk=t_id).update(account=account)
+                # return render(request, 'tea_account.html', {'tea_obj': tea_obj})
+                return redirect('/my_account/')
+    return render(request, 'tea_trans_my_account.html', {'tea_obj': tea_obj, 'error': error})

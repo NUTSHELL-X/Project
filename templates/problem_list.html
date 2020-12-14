@@ -11,7 +11,7 @@
             <h3 class="text-center">课程问题浏览</h3>
         </div>
         <div class="col-md-12">
-          <h5 class="text-right">{{ request.session.identity }}{{request.session.user}}</h5>
+            <h5 class="text-right">{{ request.session.identity }}{{ request.session.user }}</h5>
         </div>
     </div>
     <div class="row">
@@ -40,13 +40,14 @@
     </div>
     <div class="row">
         <div class="col-md-2">
-            <h3>选择分类</h3>
+            <h3>授课</h3>
             <ul>
-                <li class="list-item">类别1</li>
-                <li class="list-item">类别2</li>
-                <li class="list-item">类别3</li>
-                <li class="list-item">类别4</li>
-                <li class="list-item">类别5</li>
+                {% for teach in all_teach %}
+{#                    只要教的是这门课#}
+                    <li class="list-item"><a href="/teach_search/?course_id={{ teach.tea_cou.c.pk }}">{{ teach.tea_cou.c.c_name }}</a></li>
+                {% endfor %}
+
+
             </ul>
         </div>
         <div class="col-md-10">
@@ -97,8 +98,8 @@
                             </div>
                         </li>
                     </ul>
-                    <form class="form-inline">
-                        <input class="form-control mr-sm-2" type="text"/>
+                    <form class="form-inline" action="/problem_search/" method="post">
+                        <input class="form-control mr-sm-2" type="text" name="p_info">
                         <button class="btn btn-primary my-2 my-sm-0" type="submit">
                             Search
                         </button>
@@ -123,55 +124,27 @@
             <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th>#</th>
+                    <th>序号</th>
+                    <th>类别</th>
                     <th>课程名</th>
-                    <th>问题</th>
                     <th>老师</th>
-                    <th>满意度</th>
-                    <th>问题信息</th>
+                    <th>问题描述</th>
+                    <th>问题解答</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>课程名1</td>
-                    <td>问题1</td>
-                    <td>老师1</td>
-                    <td>满意度1</td>
-                    <td>点击查看详情</td>
-                </tr>
-                <tr class="table-active">
-                    <td>1</td>
-                    <td>课程名1</td>
-                    <td>问题1</td>
-                    <td>老师1</td>
-                    <td>满意度1</td>
-                    <td>点击查看详情</td>
-                </tr>
-                <tr class="table-success">
-                    <td>1</td>
-                    <td>课程名1</td>
-                    <td>问题1</td>
-                    <td>老师1</td>
-                    <td>满意度1</td>
-                    <td>点击查看详情</td>
-                </tr>
-                <tr class="table-warning">
-                    <td>1</td>
-                    <td>课程名1</td>
-                    <td>问题1</td>
-                    <td>老师1</td>
-                    <td>满意度1</td>
-                    <td>点击查看详情</td>
-                </tr>
-                <tr class="table-danger">
-                    <td>1</td>
-                    <td>课程名1</td>
-                    <td>问题1</td>
-                    <td>老师1</td>
-                    <td>满意度1</td>
-                    <td>点击查看详情</td>
-                </tr>
+                {% for problem in all_problem %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ problem.tea_cou.c.c_tag.tag_name }}</td>
+                        <td>{{ problem.tea_cou.c.c_name }}</td>
+                        <td>{{ problem.tea_cou.t.t_name }}</td>
+                        <td>{{ problem.p_info }}</td>
+                        <td>{{ problem.p_ans }}</td>
+                    </tr>
+                {% endfor %}
+
+
                 </tbody>
             </table>
             <nav>

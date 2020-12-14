@@ -37,10 +37,15 @@ urlpatterns = [            #将{}改为[]，TypeError: 'set' object is not rever
     #该师傅所教课程
     path("t_course_search/", search.t_course_search),
     path("teacher_search/", search.teacher_search),
+    path("tag_search/", search.tag_search),
+    path("teach_search/", search.teach_search),
+    path("problem_search/", search.problem_search),
 
     #manage.py
     path("indent_create/", manage.indent1_create),
     path("my_account/", manage.my_account),
+    path("stu_add_my_account/", manage.stu_add_my_account),
+    path("tea_trans_my_account/", manage.tea_trans_my_account),
     path("talk/", manage.talk),
     path("stu_add_problem/", manage.stu_add_problem),
     path("tea_ans_problem/", manage.tea_ans_problem),

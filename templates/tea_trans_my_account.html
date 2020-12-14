@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提现</title>
+</head>
+<body>
+<form action="" method="post">
+    <h4>提现</h4>
+    <p>师傅：{{ tea_obj.t_name }}</p>
+    <p>账户余额：{{ tea_obj.account }}</p>
+    <p>
+        提现金额：
+        <input type="number" name="trans_account">元<span>{{ error }}</span>
+    </p>
+    <br>
+    <button>提现</button>
+
+</form>
+</body>
+</html>
